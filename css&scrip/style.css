@@ -1,0 +1,852 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Colores principales */
+:root {
+  --bg-color: #000000;
+  --text-color: #ffffff;
+  --accent-color: #C1FF00;
+  --input-bg: #111111; /* Añadida para coherencia con el input */
+  --input-border: #444444; /* Añadida para coherencia con el input */
+}
+
+/* Estilos generales */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Arial', sans-serif;
+  display: flex; /* Para que el footer se quede abajo */
+  flex-direction: column; /* Para que el footer se quede abajo */
+  min-height: 100vh; /* Para que el footer se quede abajo */
+}
+
+/* ------------------------
+   Navbar
+-------------------------*/
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--bg-color);
+  z-index: 1000; /* Muy alto para estar encima */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+/* Ajusta el main y otras secciones para que no queden debajo del navbar */
+main, .ofrecemos {
+  padding-top: 140px; /* Ajusta según altura navbar */
+}
+
+/* Fondo semitransparente para modal (overlay) */
+#modalFondo {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.8); /* más oscuro para el fondo */
+  z-index: 1000;
+}
+
+/* Modal para login */
+#login {
+  display: none;
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #000; /* fondo negro */
+  color: #fff; /* texto blanco */
+  border: 2px solid #C1FF00; /* borde lima */
+  padding: 2em;
+  border-radius: 10px;
+  z-index: 1001;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 0 20px #C1FF00; /* sombra lima */
+  font-family: Arial, sans-serif;
+}
+
+/* Botón cerrar modal */
+.cerrar-btn {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.cerrar-btn:hover {
+  color: #C1FF00;
+}
+
+/* Estilo para inputs y select en el login */
+#login input,
+#login select {
+  width: 100%;
+  padding: 0.6em;
+  margin-top: 0.3em;
+  margin-bottom: 1em;
+  border: 1px solid #C1FF00;
+  background-color: #111;
+  color: #fff;
+  border-radius: 5px;
+}
+
+/* Botón enviar en el login */
+#login button[type="submit"] {
+  background-color: #C1FF00;
+  color: #000;
+  padding: 0.7em 1.2em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#login button[type="submit"]:hover {
+  background-color: #aaff00;
+}
+/* Menús izquierdo y derecho */
+.nav-left,
+.nav-right {
+  display: flex;
+}
+
+.nav-left ul,
+.nav-right ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-left li,
+.nav-right li {
+  display: inline;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s;
+}
+
+.navbar a:hover {
+  color: var(--accent-color);
+}
+
+.navbar a i {
+  margin-right: 8px;
+}
+
+/* Logo centrado */
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.logo img {
+  height: 100px;
+}
+
+/* ------------------------
+   Botón menú hamburguesa
+-------------------------*/
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+.menu-toggle:hover {
+  color: var(--accent-color);
+}
+
+/* ------------------------
+   Responsive - Móvil
+-------------------------*/
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    padding: 15px 20px;
+  }
+
+  /* Mostrar botón hamburguesa */
+  .menu-toggle {
+    display: block;
+    order: 1;
+  }
+
+  /* Ocultar menús por defecto */
+  .nav-left,
+  .nav-right {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--bg-color);
+    border-top: 1px solid var(--accent-color);
+    padding: 15px 0;
+    order: 2;
+  }
+
+  /* Mostrar menús cuando navbar tenga clase activa */
+  .navbar.menu-active .nav-left,
+  .navbar.menu-active .nav-right {
+    display: flex;
+  }
+
+  /* Listas verticales */
+  .nav-left ul,
+  .nav-right ul {
+    flex-direction: column;
+    gap: 12px;
+    padding-left: 0;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-left li,
+  .nav-right li {
+    display: block;
+  }
+
+  .navbar a {
+    justify-content: center;
+    font-size: 1.1rem;
+    padding: 10px 0;
+  }
+
+  /* Ajustar logo para móvil */
+  .logo {
+    order: 0;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  .logo img {
+    height: 80px;
+  }
+}
+
+/* ------------------------
+   Secciones secundarias
+-------------------------*/
+nav a {
+  color: var(--accent-color);
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+  color: var(--text-color);
+}
+
+/* ------------------------
+   Main content y secciones
+-------------------------*/
+main {
+  flex-grow: 1; /* Permite que el main ocupe el espacio restante */
+  padding: 30px 20px;
+  background-color: #111;
+}
+
+/* Sección "Quiénes somos" */
+#quienes {
+  max-width: 1300px;
+  margin: 60px auto;
+  padding: 0 20px;
+  color: #eee;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  text-align: left;
+}
+
+#quienes h2 {
+  font-weight: 600;
+  font-size: 2.5rem;
+  color: var(--accent-color);
+  text-align: center;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+#quienes p {
+  margin-bottom: 1.3rem;
+  font-size: 1.1rem;
+  color: #ccc;
+}
+
+#quienes:hover {
+  box-shadow: 0 0 30px var(--accent-color);
+  border-radius: 5%;
+}
+
+/* Títulos generales */
+h1, h2 {
+  color: var(--accent-color);
+  margin-bottom: 10px;
+}
+
+/* ------------------------
+   Sección "Qué ofrecemos"
+-------------------------*/
+.ofrecemos-contenedor {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  animation: fadeInUp 1.2s ease;
+}
+
+.item {
+  text-align: center;
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+  padding: 15px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 20px rgba(193, 255, 0, 0.2);
+  border: 2px solid transparent;
+  backdrop-filter: blur(5px);
+  cursor: pointer;
+}
+
+.item img {
+  width: 350px;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 25px;
+  margin-bottom: 10px;
+  border: 3px solid var(--accent-color);
+  transition: transform 0.3s ease;
+}
+
+.item span {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--accent-color);
+  transition: color 0.3s ease;
+}
+
+/* Efecto hover */
+.item:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 0 30px var(--accent-color);
+  background: linear-gradient(135deg, var(--accent-color) 10%, #111 90%);
+  border-color: var(--accent-color);
+}
+
+.item:hover span {
+  color: #000;
+}
+
+.item:hover img {
+  transform: scale(1.1);
+}
+
+/* Animación de entrada */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/*Roles estilo Foro*/
+/* Reset básico */
+/* Nota: Este reset se repite, lo ideal es tenerlo solo una vez al inicio del CSS */
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} */
+
+/* Variables de color */
+/* Nota: Las variables de color ya están definidas al inicio, esta repetición puede ser eliminada si no hay sobreescritura */
+/* :root {
+  --bg-color: #000000;
+  --text-color: #ffffff;
+  --accent-color: #C1FF00;
+  --input-bg: #111111;
+  --input-border: #444444;
+  --comment-bg: rgba(193, 255, 0, 0.1);
+  --shadow-color: rgba(193, 255, 0, 0.3);
+} */
+
+/* Body general */
+/* Nota: el body ya está definido al inicio, esta repetición puede ser eliminada */
+/* body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Arial', sans-serif;
+  line-height: 1.5;
+  padding: 20px;
+} */
+
+/* Contenedor principal */
+/* Nota: main ya está definido al inicio, esta repetición puede ser eliminada */
+/* main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+} */
+
+/* Panel Admin (publicar post) */
+#adminPanel {
+  background: #111;
+  border: 2px solid var(--accent-color);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px var(--shadow-color);
+  margin-bottom: 40px;
+}
+
+#adminPanel h2 {
+  color: var(--accent-color);
+  margin-bottom: 20px;
+  font-weight: 700;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+#adminPanel form input[type="text"],
+#adminPanel form textarea,
+#adminPanel form input[type="file"] {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  color: var(--text-color);
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+#adminPanel form input[type="text"]:focus,
+#adminPanel form textarea:focus,
+#adminPanel form input[type="file"]:focus {
+  border-color: var(--accent-color);
+  outline: none;
+}
+
+#adminPanel form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+#adminPanel form button {
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+  border: none;
+  padding: 12px 25px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+#adminPanel form button:hover {
+  background-color: #aaff00cc;
+}
+
+/* Contenedor de publicaciones */
+#postsContainer {
+  background: #111;
+  border-radius: 15px;
+  box-shadow: 0 0 15px var(--shadow-color);
+  padding: 20px;
+  margin-bottom: 40px;
+}
+
+#postsContainer h2 {
+  color: var(--accent-color);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* Cada post */
+.post {
+  border-bottom: 1px solid #222;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.post:last-child {
+  border-bottom: none;
+}
+
+.post h3 {
+  color: var(--accent-color);
+  font-weight: 700;
+  margin-bottom: 10px;
+  font-size: 1.4rem;
+}
+
+.post p {
+  color: var(--text-color);
+  font-size: 1rem;
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+}
+
+.post img {
+  max-width: 100%;
+  border-radius: 15px;
+  margin-top: 10px;
+  box-shadow: 0 0 8px var(--shadow-color);
+}
+
+/* Comentarios */
+#comentarios {
+  background: #111;
+  padding: 15px 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px var(--shadow-color);
+  margin-bottom: 25px;
+}
+
+.comentario {
+  background: var(--comment-bg);
+  border-radius: 12px;
+  padding: 10px 15px;
+  margin-bottom: 12px;
+  color: var(--text-color);
+  font-size: 0.95rem;
+}
+
+.comentario strong {
+  color: var(--accent-color);
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+/* Input comentario */
+#comentarioInput {
+  width: 100%;
+  min-height: 80px;
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  border-radius: 12px;
+  padding: 10px;
+  color: var(--text-color);
+  font-size: 1rem;
+  resize: vertical;
+  margin-bottom: 15px;
+  transition: border-color 0.3s;
+}
+
+#comentarioInput:focus {
+  border-color: var(--accent-color);
+  outline: none;
+}
+
+/* Botón publicar comentario */
+#btnPublicarComentario {
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+  border: none;
+  padding: 12px 25px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+#btnPublicarComentario:hover {
+  background-color: #aaff00cc;
+}
+
+/* Entrada nueva publicación admin */
+#entradaInput {
+  width: 70%;
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  border-radius: 12px;
+  padding: 10px;
+  color: var(--text-color);
+  font-size: 1rem;
+  margin-right: 15px;
+  transition: border-color 0.3s;
+}
+
+#entradaInput:focus {
+  border-color: var(--accent-color);
+  outline: none;
+}
+
+#btnPublicarEntrada {
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+  border: none;
+  padding: 12px 25px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#btnPublicarEntrada:hover {
+  background-color: #aaff00cc;
+}
+
+/* ------------------------
+   Ajustes para el Catálogo (nuevos estilos)
+-------------------------*/
+/* Estilo para la galería de productos */
+.galeria {
+  display: flex;
+  justify-content: center;
+  gap: 40px; /* Espacio entre los productos */
+  flex-wrap: wrap; /* Permite que los productos se envuelvan a la siguiente línea */
+  margin-top: 20px;
+  animation: fadeInUp 1.2s ease; /* Aplica la misma animación de entrada */
+}
+
+.producto {
+  text-align: center;
+  color: var(--accent-color); /* Color del texto del título */
+  text-decoration: none;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease; /* Transiciones para efectos hover */
+  padding: 15px;
+  border-radius: 25px; /* Bordes redondeados para la tarjeta del producto */
+  background: rgba(255, 255, 255, 0.05); /* Fondo semitransparente */
+  box-shadow: 0 0 20px rgba(193, 255, 0, 0.2); /* Sombra lima */
+  border: 2px solid transparent; /* Borde transparente inicial */
+  backdrop-filter: blur(5px); /* Efecto de desenfoque */
+  cursor: pointer;
+  width: 350px; /* Ancho fijo para cada tarjeta de producto */
+  display: flex; /* Para organizar el contenido verticalmente */
+  flex-direction: column;
+  justify-content: space-between; /* Empuja el botón hacia la parte inferior */
+}
+
+.producto img {
+  width: 100%; /* La imagen ocupa todo el ancho de la tarjeta */
+  height: 300px; /* Altura fija para las imágenes de los productos */
+  object-fit: cover; /* Recorta la imagen para cubrir el espacio sin distorsionarla */
+  border-radius: 15px; /* Bordes redondeados para la imagen */
+  margin-bottom: 15px; /* Espacio debajo de la imagen */
+  border: 3px solid var(--accent-color); /* Borde de color lima */
+  transition: transform 0.3s ease; /* Transición para el efecto de zoom */
+}
+
+.producto h3 {
+  font-size: 1.3rem; /* Tamaño de fuente para el título del producto */
+  font-weight: bold;
+  color: var(--accent-color);
+  margin-bottom: 10px;
+}
+
+.producto p {
+  font-size: 1.1rem; /* Tamaño de fuente para el precio */
+  color: var(--text-color);
+  margin-bottom: 15px;
+}
+
+.producto a button { /* Estilo para el botón "Comprar por WhatsApp" */
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+  border: none;
+  padding: 12px 25px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%; /* El botón ocupa todo el ancho de la tarjeta */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.producto a button:hover {
+  background-color: #aaff00cc; /* Color al pasar el ratón por el botón */
+  transform: translateY(-3px); /* Efecto de elevación al pasar el ratón */
+}
+
+/* Efectos hover para las tarjetas de producto, similares a los elementos "item" */
+.producto:hover {
+  transform: translateY(-10px) scale(1.05); /* Elevación y ligero aumento de tamaño */
+  box-shadow: 0 0 30px var(--accent-color); /* Sombra más pronunciada */
+  background: linear-gradient(135deg, var(--accent-color) 10%, #111 90%); /* Degradado en el fondo */
+  border-color: var(--accent-color); /* Borde de color lima */
+}
+
+.producto:hover h3,
+.producto:hover p {
+  color: #000; /* Cambia el color del texto a negro al pasar el ratón */
+}
+
+.producto:hover img {
+  transform: scale(1.1); /* Efecto de zoom en la imagen al pasar el ratón */
+}
+
+/* Ajustes responsive para los productos en pantallas pequeñas */
+@media (max-width: 768px) {
+  .producto {
+    width: 90%; /* Los productos ocupan más ancho en móviles */
+    max-width: 350px; /* Para que no se estiren demasiado en pantallas medianas */
+  }
+}
+
+/* ------------------------
+   Estilos específicos para la Agenda (nuevos ajustes)
+-------------------------*/
+#agendaForm {
+  max-width: 600px;
+  margin: 40px auto; /* Centrar el formulario y darle margen */
+  padding: 30px;
+  background: #111; /* Fondo oscuro */
+  border: 2px solid var(--accent-color); /* Borde lima */
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(193, 255, 0, 0.3); /* Sombra lima */
+}
+
+#agendaForm h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: var(--accent-color);
+  font-size: 2rem;
+}
+
+#agendaForm label {
+  display: block; /* Cada etiqueta en una nueva línea */
+  margin-bottom: 8px;
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+#agendaForm input[type="text"],
+#agendaForm input[type="date"],
+#agendaForm input[type="time"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  background-color: var(--input-bg); /* Heredado de variables de foro */
+  border: 1.5px solid var(--input-border); /* Heredado de variables de foro */
+  color: var(--text-color);
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+#agendaForm input[type="text"]:focus,
+#agendaForm input[type="date"]:focus,
+#agendaForm input[type="time"]:focus {
+  border-color: var(--accent-color);
+  outline: none;
+}
+
+#agendaForm button[type="submit"] {
+  background-color: var(--accent-color);
+  color: var(--bg-color); /* Color de texto oscuro */
+  border: none;
+  padding: 15px 30px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%; /* Botón ocupa todo el ancho */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#agendaForm button[type="submit"]:hover {
+  background-color: #aaff00cc; /* Tono más oscuro al pasar el ratón */
+  transform: translateY(-3px); /* Pequeña elevación */
+}
+
+#mensajeAgenda {
+  text-align: center;
+  margin-top: 20px;
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+/* Ajustes responsive para el formulario de la agenda */
+@media (max-width: 768px) {
+  #agendaForm {
+    margin: 20px auto;
+    padding: 20px;
+  }
+}
+
+/* ------------------------
+   Footer (nuevo estilo)
+-------------------------*/
+footer {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.7);
+  margin-top: 50px; /* Espacio superior para separarlo del contenido */
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.footer-content p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.footer-social a {
+  color: var(--text-color);
+  font-size: 1.5rem;
+  margin: 0 10px;
+  transition: color 0.3s ease;
+}
+
+.footer-social a:hover {
+  color: var(--accent-color);
+}
+
+/* Responsive para el footer */
+@media (max-width: 768px) {
+  .footer-content {
+    padding: 15px 0;
+  }
+}
